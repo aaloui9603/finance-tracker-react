@@ -20,12 +20,13 @@ function TransactionForm({ onAdd }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!amount || isNaN(amount) || Number(amount) <= 0) return
+    const parsed = parseFloat(amount)
+    if (!amount || isNaN(parsed) || parsed <= 0) return
 
     onAdd({
       id: Date.now(),
       type,
-      amount: Number(amount),
+      amount: parsed,
       category,
       date,
       note
@@ -55,7 +56,6 @@ function TransactionForm({ onAdd }) {
 
       <form onSubmit={handleSubmit}>
 
-        {/* Typ Toggle */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1rem' }}>
           <button
             type="button"
@@ -91,14 +91,13 @@ function TransactionForm({ onAdd }) {
           </button>
         </div>
 
-        {/* Betrag */}
         <div style={{ marginBottom: '1rem' }}>
           <label style={{ display: 'block', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.375rem' }}>
             Betrag (€)
           </label>
           <input
             type="number"
-            min="0"
+            min="0.01"
             step="0.01"
             placeholder="0.00"
             value={amount}
@@ -108,7 +107,6 @@ function TransactionForm({ onAdd }) {
           />
         </div>
 
-        {/* Kategorie */}
         <div style={{ marginBottom: '1rem' }}>
           <label style={{ display: 'block', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.375rem' }}>
             Kategorie
@@ -126,7 +124,6 @@ function TransactionForm({ onAdd }) {
           </select>
         </div>
 
-        {/* Datum */}
         <div style={{ marginBottom: '1rem' }}>
           <label style={{ display: 'block', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.375rem' }}>
             Datum
@@ -139,7 +136,6 @@ function TransactionForm({ onAdd }) {
           />
         </div>
 
-        {/* Notiz */}
         <div style={{ marginBottom: '1.25rem' }}>
           <label style={{ display: 'block', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.375rem' }}>
             Notiz (optional)
@@ -153,7 +149,6 @@ function TransactionForm({ onAdd }) {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           style={{

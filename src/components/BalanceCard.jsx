@@ -11,7 +11,6 @@ function BalanceCard({ balance, totalIncome, totalExpense }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
 
-        {/* Einnahmen */}
         <div style={{
           background: 'rgba(13, 148, 136, 0.15)',
           border: '1px solid rgba(13, 148, 136, 0.3)',
@@ -26,7 +25,6 @@ function BalanceCard({ balance, totalIncome, totalExpense }) {
           </p>
         </div>
 
-        {/* Ausgaben */}
         <div style={{
           background: 'rgba(190, 24, 93, 0.15)',
           border: '1px solid rgba(190, 24, 93, 0.3)',
