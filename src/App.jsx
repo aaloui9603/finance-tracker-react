@@ -1,6 +1,24 @@
+import { useState } from 'react'
 import BalanceCard from './components/BalanceCard'
+import TransactionForm from './components/TransactionForm'
 
 function App() {
+  const [transactions, setTransactions] = useState([])
+
+  const totalIncome = transactions
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  const totalExpense = transactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  const balance = totalIncome - totalExpense
+
+  function handleAdd(transaction) {
+    setTransactions(prev => [transaction, ...prev])
+  }
+
   return (
     <div style={{ position: 'relative', minHeight: '100vh', padding: '2rem' }}>
 
@@ -31,10 +49,12 @@ function App() {
         </h1>
 
         <BalanceCard
-          balance={1500}
-          totalIncome={2000}
-          totalExpense={500}
+          balance={balance}
+          totalIncome={totalIncome}
+          totalExpense={totalExpense}
         />
+
+        <TransactionForm onAdd={handleAdd} />
 
       </div>
     </div>
