@@ -1,11 +1,18 @@
 function BalanceCard({ balance, totalIncome, totalExpense }) {
+  const isPositive = balance >= 0
+
   return (
     <div className="glass-card" style={{ padding: '1.5rem', marginBottom: '1.5rem' }}>
 
       <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>
         Aktuelles Guthaben
       </p>
-      <p style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: '1.5rem' }}>
+      <p style={{
+        fontSize: '2.5rem',
+        fontWeight: '700',
+        marginBottom: '1.5rem',
+        color: isPositive ? '#0d9488' : '#be185d'
+      }}>
         {balance.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
       </p>
 

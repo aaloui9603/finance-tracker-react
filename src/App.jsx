@@ -34,7 +34,6 @@ function App() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', padding: '2rem' }}>
 
-      {/* Farbkugeln */}
       <div style={orb('-10rem', '-10rem', 'auto', 'auto', 'rgba(30,64,175,0.4)')} />
       <div style={orb('10rem', 'auto', '-8rem', 'auto', 'rgba(8,145,178,0.35)')} />
       <div style={orb('auto', '30%', 'auto', '-8rem', 'rgba(157,23,77,0.35)')} />
@@ -42,16 +41,29 @@ function App() {
       <div style={{ position: 'relative', zIndex: 1, maxWidth: '1100px', margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: '700' }}>
-            💰 Finance Tracker
-          </h1>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-            {today}
-          </p>
+        <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div>
+            <h1 style={{ fontSize: '2rem', fontWeight: '700' }}>
+              💰 Finance Tracker
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+              {today}
+            </p>
+          </div>
+          <div style={{
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: '999px',
+            padding: '0.375rem 1rem',
+            fontSize: '0.8rem',
+            color: 'rgba(255,255,255,0.5)',
+            alignSelf: 'center'
+          }}>
+            {transactions.length} Transaktion{transactions.length !== 1 ? 'en' : ''}
+          </div>
         </div>
 
-        {/* BalanceCard — volle Breite */}
+        {/* BalanceCard */}
         <BalanceCard
           balance={balance}
           totalIncome={totalIncome}
@@ -71,8 +83,6 @@ function App() {
           gap: '1.5rem',
           alignItems: 'start'
         }}>
-
-          {/* Linke Spalte: Form + Liste */}
           <div>
             <TransactionForm onAdd={addTransaction} />
             <TransactionList
@@ -80,13 +90,11 @@ function App() {
               onDelete={deleteTransaction}
             />
           </div>
-
-          {/* Rechte Spalte: Chart */}
           <div>
             <CategoryChart transactions={transactions} />
           </div>
-
         </div>
+
       </div>
     </div>
   )
