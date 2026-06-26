@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { startOfWeek, startOfMonth, startOfYear, isAfter } from 'date-fns'
 
 const STORAGE_KEY = 'finance_tracker_transactions'
 
@@ -12,6 +13,8 @@ function useTransactions() {
     }
   })
 
+  const [activeFilter, setActiveFilter] = useState('all')
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions))
   }, [transactions])
@@ -24,23 +27,38 @@ function useTransactions() {
     setTransactions(prev => prev.filter(t => t.id !== id))
   }
 
-  const totalIncome = transactions
+  const filteredTransactions = useMemo(() => {
+    if (activeFilter === 'all') return transactions
+
+    const now = new Date()
+    let startDate
+
+    if (activeFilter === 'week') startDate = startOfWeek(now, { weekStartsOn: 1 })
+    if (activeFilter === 'month') startDate = startOfMonth(now)
+    if (activeFilter === 'year') startDate = startOfYear(now)
+
+    return transactions.filter(t => isAfter(new Date(t.date), startDate))
+  }, [transactions, activeFilter])
+
+  const totalIncome = filteredTransactions
     .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
 
-  const totalExpense = transactions
+  const totalExpense = filteredTransactions
     .filter(t => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0)
 
   const balance = totalIncome - totalExpense
 
   return {
-    transactions,
+    transactions: filteredTransactions,
     addTransaction,
     deleteTransaction,
     totalIncome,
     totalExpense,
-    balance
+    balance,
+    activeFilter,
+    setActiveFilter
   }
 }
 

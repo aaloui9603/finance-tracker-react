@@ -1,6 +1,7 @@
 import BalanceCard from './components/BalanceCard'
 import TransactionForm from './components/TransactionForm'
 import TransactionList from './components/TransactionList'
+import FilterBar from './components/FilterBar'
 import useTransactions from './hooks/useTransactions'
 
 const orb = (top, left, right, bottom, color) => ({
@@ -20,7 +21,9 @@ function App() {
     deleteTransaction,
     totalIncome,
     totalExpense,
-    balance
+    balance,
+    activeFilter,
+    setActiveFilter
   } = useTransactions()
 
   return (
@@ -42,6 +45,11 @@ function App() {
         />
 
         <TransactionForm onAdd={addTransaction} />
+
+        <FilterBar
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+        />
 
         <TransactionList
           transactions={transactions}
