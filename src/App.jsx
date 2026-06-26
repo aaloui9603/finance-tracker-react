@@ -1,8 +1,10 @@
+import BalanceCard from './components/BalanceCard'
+
 function App() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', padding: '2rem' }}>
 
-      {/* Schwebende Farbkugeln */}
+      {/* Farbkugeln */}
       <div style={{
         position: 'fixed', top: '-10rem', left: '-10rem',
         width: '40rem', height: '40rem', borderRadius: '50%',
@@ -28,11 +30,13 @@ function App() {
           💰 Finance Tracker
         </h1>
 
-        <div className="glass-card" style={{ padding: '1.5rem' }}>
-          <p style={{ color: 'rgba(255,255,255,0.7)' }}>M-2 erfolgreich — Glassmorphism läuft! ✅</p>
-        </div>
-      </div>
+        <BalanceCard
+          balance={1500}
+          totalIncome={2000}
+          totalExpense={500}
+        />
 
+      </div>
     </div>
   )
 }
